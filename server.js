@@ -38,11 +38,6 @@ app.use(bodyParser.json());
 
 app.use('/api/calculations', calculations);
 
-app.use(express.static('static'));
-app.get('/',function(req,res){
-    res.sendFile(__dirname+'/static/index.html');
-    //__dirname : It will resolve to your project folder.
-  });
 
 //serve static assets if in production
 if(process.env.NODE_ENV === 'production')
@@ -50,6 +45,14 @@ if(process.env.NODE_ENV === 'production')
     app.use(express.static('client/build'));
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    });
+}
+else {
+    
+    app.use(express.static('static'));
+    app.get('*',function(req,res){
+        res.sendFile(__dirname+'/static/index.html');
+        //__dirname : It will resolve to your project folder.
     });
 }
 
