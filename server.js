@@ -24,8 +24,8 @@ app.use(function (req, res, next) {
   
     // Set to true if you need the website to include cookies in the requests sent
     // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
+    res.setHeader('Access-Control-Allow-Credentials', false);
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
   
     // Pass to next layer of middleware
     next();
@@ -39,16 +39,15 @@ app.use(bodyParser.json());
 app.use('/api/calculations', calculations);
 
 app.use(express.static('static'));
-app.get('/', (req, res) => {
-    res.send('BCIT - TA assessment')
-})
+app.get('/',function(req,res){
+    res.sendFile(__dirname+'/static/index.html');
+    //__dirname : It will resolve to your project folder.
+  });
 
 //serve static assets if in production
 if(process.env.NODE_ENV === 'production')
 {
-    //set static folder
     app.use(express.static('client/build'));
-
     app.get('*', (req, res) => {
         res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
