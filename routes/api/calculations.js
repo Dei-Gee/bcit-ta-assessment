@@ -3,7 +3,7 @@ const router  = express.Router();
 
 router.get('/:numOne/:numTwo', (req, res) => {
     let sum = parseInt(req.params.numOne) + parseInt(req.params.numTwo);
-    res.send(sum.toString());
+    res.send({sum: sum.toString()});
 });
 
 module.exports = router;
